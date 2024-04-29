@@ -1,5 +1,12 @@
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/ossf/fuzz-introspector/badge)](https://api.securityscorecards.dev/projects/github.com/ossf/fuzz-introspector)
 
+# My modification
+
+## the Dockerfile
+Change several steps to the Dockerfile to enable build on MacOS (M1)
+1. Specify amd64 build of docker image 
+2. Change the patch-llvm.sh script to address a know issue in Docker desktop in mac
+
 # Fuzz introspector
 
 Fuzz introspector is a tool to help fuzzer developers to get an understanding of their fuzzer’s performance 
