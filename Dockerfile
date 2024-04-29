@@ -1,4 +1,7 @@
-FROM ubuntu:20.04 AS fuzz-introspector
+# FROM ubuntu:20.04 AS fuzz-introspector
+
+# For M1 user
+FROM --platform=linux/amd64 ubuntu:20.04 AS fuzz-introspector
 
 # GCC-10 and CLANG/LLVM 12
 # Copyright 2022 Fuzz Introspector Authors
@@ -40,8 +43,13 @@ RUN apt-get update && \
 RUN echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main" >> /etc/apt/sources.list && \
     wget -qO - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 
-RUN echo "deb http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu focal main" >> /etc/apt/sources.list && \
-    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1E9377A2BA9EF27F
+RUN apt-get update
+
+RUN echo "deb http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu focal main" >> /etc/apt/sources.list
+
+# RUN apt-get update
+
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 1E9377A2BA9EF27F
 
 RUN apt-get update && apt-get full-upgrade -y && \
     apt-get -y install --no-install-suggests --no-install-recommends \
@@ -67,5 +75,5 @@ RUN echo 'export PS1="[fuzz-introspector]$PS1"' >> ~/.bashrc
 ENV IS_DOCKER="1"
 
 WORKDIR /src
-ENTRYPOINT "/src/build_all.sh"
+# ENTRYPOINT "/src/build_all.sh"
 
